@@ -11,7 +11,7 @@
 
 # How to use:
 # on CMD in the script's folder enter ([] is an argument or option, () optional):
-# svc-dataset-maker.py [file path or file name] [dataset name] (-f [set folder]) (-r [remove source file])  
+# svc-dataset-maker.py [file path or file name] [dataset name] (-f [set folder]) (-s [sub set folder name]) (-r [remove source file])  
 
 # Thanks to pydub and click for making this possible
 
@@ -21,12 +21,13 @@ import pydub, os, click
 @click.argument('file_path') # or file name for an audio file inside the script's folder
 @click.argument('set_name')
 @click.option('set_nest_folder', '-f', default='', help='Where to put: /dataset_raw/<set_name>/')
+@click.option('sub_set_name', '-s', default='', help='Sub set folder name: in /dataset_raw/<set_name>/<sub_set_name>')
 @click.option('remove_source', '-r', is_flag=True)
 
-def slice_audio(file_path, set_name, set_nest_folder, remove_source = False, ):
+def slice_audio(file_path, set_name, set_nest_folder, sub_set_name, remove_source):
     if set_nest_folder == '':
         set_nest_folder = os.path.dirname(__file__)
-    PATH_TO_SET = (set_nest_folder + '\\dataset_raw\\' + set_name + '\\')
+    path_to_set = (set_nest_folder + '\\dataset_raw\\' + set_name + '\\')
 
     click.echo("Processing...")  
     extension = file_path.split('.')[1]
@@ -35,13 +36,19 @@ def slice_audio(file_path, set_name, set_nest_folder, remove_source = False, ):
     if os.path.exists(set_nest_folder + '\\dataset_raw\\') == False:
         os.mkdir(set_nest_folder + '\\dataset_raw\\')
         click.echo("Created the 'dataset_raw' folder.")
-    if os.path.exists(set_nest_folder + PATH_TO_SET) == False:
-        os.mkdir(PATH_TO_SET)
-        click.echo(f"Created the {set_name} folders.")
+    if os.path.exists(path_to_set) == False:
+        os.mkdir(path_to_set)
+        click.echo(f"Created the {set_name} folder.")
+        
+    if sub_set_name != '':
+        path_to_set += sub_set_name + '\\'
+        if os.path.exists(path_to_set) == False:
+            os.mkdir(path_to_set)
+            click.echo(f"Created the {sub_set_name} folder.")
 
     slices = audio_file[::10 * 1000]
     for i, slice in enumerate(slices):
-        slice.export(f'{PATH_TO_SET}{set_name}-slice{i}.wav')
+        slice.export(f'{path_to_set}{set_name}-slice{i}.wav')
         click.echo('Slice #{0} of {1} saved.'.format(i, enumerate(slices)))
     
     if remove_source:
