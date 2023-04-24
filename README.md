@@ -5,6 +5,7 @@ Cuts audio in folder (next to script) into
 a training set for so-vits-svc (/dataset/dataset/raw/name)
 in whatever location you want.
 This also works on pre-existing directories
+The audio slices are exported as .wav files ready for so-vits-svc training
 
 Tip: put the script on your so-vits-svc folder so you don't have
 to set path or move the files into there
