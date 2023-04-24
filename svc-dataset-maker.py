@@ -31,10 +31,12 @@ def slice_audio(file_path, set_name, set_nest_folder, remove_source = False, ):
     extension = file_path.split('.')[1]
     audio_file = pydub.AudioSegment.from_file(file_path, extension)
 
-    if os.path.exists(PATH_TO_SET) == False:
+    if os.path.exists(set_nest_folder + '\\dataset_raw\\') == False:
         os.mkdir(set_nest_folder + '\\dataset_raw\\')
+        click.echo("Created the 'dataset_raw' folder.")
+    if os.path.exists(set_nest_folder + PATH_TO_SET) == False:
         os.mkdir(PATH_TO_SET)
-        click.echo("Created folders.")
+        click.echo(f"Created the {set_name} folders.")
 
     slices = audio_file[::10 * 1000]
     for i, slice in enumerate(slices):
