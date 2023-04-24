@@ -5,7 +5,7 @@ Cuts audio in folder (next to script) into
 a training set for so-vits-svc (/dataset/dataset/raw/name)
 in whatever location you want.
 
-Tip: put these script on your so-vits-svc folder so you don't have
+Tip: put the script on your so-vits-svc folder so you don't have
 to set path or move the files into there
 
 # How to use:
