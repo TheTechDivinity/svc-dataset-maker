@@ -38,22 +38,26 @@ def slice_audio(file_path, set_name, set_nest_folder, sub_set_name, remove_sourc
         click.echo("Created the 'dataset_raw' folder.")
     if os.path.exists(path_to_set) == False:
         os.mkdir(path_to_set)
-        click.echo(f"Created the {set_name} folder.")
+        click.echo(f"Created the '{set_name}' folder.")
         
     if sub_set_name != '':
         path_to_set += sub_set_name + '\\'
         if os.path.exists(path_to_set) == False:
             os.mkdir(path_to_set)
-            click.echo(f"Created the {sub_set_name} folder.")
+            click.echo(f"Created the '{sub_set_name}' folder.")
 
+    click.echo(f'Folders loaded, now slicing {file_path} into {path_to_set}...')
     slices = audio_file[::10 * 1000]
-    for i, slice in enumerate(slices):
+    slices_count = sum(1 for _ in enumerate(slices))
+    
+    slices = audio_file[::10 * 1000]
+    for i, slice in enumerate(slices, start=1):
         slice.export(f'{path_to_set}{set_name}-{sub_set_name}-slice{i}.wav')
-        click.echo('Slice #{0} of {1} saved.'.format(i, enumerate(slices)))
+        click.echo(f'Slice #{i} of {slices_count} saved.')
     
     if remove_source:
         os.remove(file_path)
-        click.echo("Removed source file.")
+        click.echo(f"Removed source file. ({file_path})")
 
     click.echo("Finished.")
 
