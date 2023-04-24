@@ -48,7 +48,7 @@ def slice_audio(file_path, set_name, set_nest_folder, sub_set_name, remove_sourc
 
     slices = audio_file[::10 * 1000]
     for i, slice in enumerate(slices):
-        slice.export(f'{path_to_set}{set_name}-slice{i}.wav')
+        slice.export(f'{path_to_set}{set_name}-{sub_set_name}-slice{i}.wav')
         click.echo('Slice #{0} of {1} saved.'.format(i, enumerate(slices)))
     
     if remove_source:
