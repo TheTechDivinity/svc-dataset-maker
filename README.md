@@ -9,7 +9,7 @@ Tip: put these script on your so-vits-svc folder so you don't have
 to set path or move the files into there
 
 # How to use:
-On CMD in the script's folder enter (<> is an argument or option, () optional):
-# main.py <file path or file name> <dataset name> (-f <set folder>) (-r <remove source file>)  
+On CMD in the script's folder enter ([] is an argument or option, () optional):
+main.py [file path or file name] [dataset name] (-f [set folder]) (-r [remove source file])  
 
 and Thanks to pydub and click for making this possible
